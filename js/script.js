@@ -7,6 +7,29 @@ const addContact = document.getElementById("addContact");
 const contactList = document.getElementById("contactList");
 let contacts = [];
 
+async function loadcontact(){
+ try{const response= await fetch( "https://jsonplaceholder.typicode.com/users");
+  const data=await response.json();
+
+  contactList.innerHTML="";
+  data.forEach((data)=>{
+    const li=document.createElement("li");
+    li.className="d-flex justify-content-between align-items-center p-2 mb-2 border border-1 border-secondary";
+  li.innerHTML = `
+    <span><span class="fs-5">${data.name}</span><br>${data.phone}</span>
+    <div>
+      <button class="btn btn-sm btn-warning me-1">Edit</button>
+      <button class="btn btn-sm btn-danger">X</button>
+    </div>
+  `;
+    contactList.appendChild(li);
+  })}
+ 
+  catch (error){
+    console.error(error);
+  };
+}
+loadcontact();
 // Add Contact
 addContact.addEventListener("click", () => {
   const name = prompt("Enter name");
